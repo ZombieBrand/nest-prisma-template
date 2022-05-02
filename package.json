@@ -27,6 +27,7 @@
     "prisma:seed": "npx prisma db seed"
   },
   "dependencies": {
+    "@devoxa/prisma-relay-cursor-connection": "^2.2.1",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^8.0.0",

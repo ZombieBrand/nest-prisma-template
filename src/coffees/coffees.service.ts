@@ -12,7 +12,7 @@ export class CoffeesService {
   async findOne(id: string) {
     const coffee = await this.prismaService.coffee.findUnique({
       where: {
-        id: +id,
+        id: id,
       },
     });
     if (!coffee) {
@@ -30,7 +30,7 @@ export class CoffeesService {
   async update(id: string, updateCoffeeDto: any) {
     return this.prismaService.coffee.update({
       where: {
-        id: +id,
+        id: id,
       },
       data: updateCoffeeDto,
     });
@@ -40,7 +40,7 @@ export class CoffeesService {
     try {
       const result = await this.prismaService.coffee.delete({
         where: {
-          id: +id,
+          id: id,
         },
       });
       console.log(result);

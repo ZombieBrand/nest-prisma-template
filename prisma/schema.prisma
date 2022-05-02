@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Product {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -23,7 +23,7 @@ model Product {
 }
 
 model Coffee {
-  id     Int      @id @default(autoincrement())
+  id     String   @id @default(cuid())
   name   String
   brand  String?
   flavor String[]

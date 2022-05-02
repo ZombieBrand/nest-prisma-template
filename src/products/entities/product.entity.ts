@@ -6,7 +6,7 @@ export class ProductEntity implements Product {
    * id
    * @example 1
    */
-  id: number;
+  id: string;
   /**
    * 创建时间
    * @example '2022-05-01T10:00:15.639Z'
