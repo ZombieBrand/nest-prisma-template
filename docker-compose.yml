@@ -1,29 +1,9 @@
-version: '3.8'
+version: '4.7.1'
 services:
-  nest-api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: nest-api
+    db:
+    image: postgres
     restart: always
     ports:
-      - 3000:3000
-    depends_on:
-      - nest-postgres
-    env_file:
-      - .env
-
-  nest-postgres:
-    image: postgres:13
-    container_name: nest-postgres
-    restart: always
-    ports:
-      - 5432:5432
-    env_file:
-      - .env
-    volumes:
-      - nest-postgres:/var/lib/postgresql/data
-
-volumes:
-  nest-postgres:
-    name: nest-postgres-db
+    - "5432:5432"
+    environment:
+    - POSTGRES_USER=cyz121

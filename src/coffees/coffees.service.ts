@@ -1,6 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Coffee as CoffeeModel } from '@prisma/client';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 @Injectable()
 export class CoffeesService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -21,13 +23,13 @@ export class CoffeesService {
     return coffee;
   }
 
-  async create(createCoffeeDto: any) {
+  async create(createCoffeeDto: CreateCoffeeDto) {
     return this.prismaService.coffee.create({
       data: createCoffeeDto,
     });
   }
 
-  async update(id: string, updateCoffeeDto: any) {
+  async update(id: string, updateCoffeeDto: UpdateCoffeeDto) {
     return this.prismaService.coffee.update({
       where: {
         id: id,
