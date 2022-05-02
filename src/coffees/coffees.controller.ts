@@ -10,6 +10,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 
 @Controller('coffees')
 @ApiTags('coffees')
@@ -29,13 +31,16 @@ export class CoffeesController {
   }
 
   @Post()
-  async create(@Body() body: any) {
-    return this.coffeesService.create(body);
+  async create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    return this.coffeesService.create(createCoffeeDto);
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() body: any) {
-    return this.coffeesService.update(id, body);
+  async update(
+    @Param('id') id: string,
+    @Body() updateCoffeeDto: UpdateCoffeeDto,
+  ) {
+    return this.coffeesService.update(id, updateCoffeeDto);
   }
 
   @Delete(':id')
