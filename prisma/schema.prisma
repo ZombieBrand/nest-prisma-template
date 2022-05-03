@@ -24,14 +24,14 @@ model Product {
 
 model Coffee {
   id      String   @id @default(cuid())
-  name    String
+  name    String   @unique
   brand   String?
   flavors Flavor[]
 }
 
 model Flavor {
   id      String   @id @default(cuid())
-  name    String
+  name    String   @unique
   coffees Coffee[]
 }
 

@@ -1,12 +1,19 @@
 import { PrismaClient } from '@prisma/client';
 import { coffees } from '../mock/coffees';
 import { products } from '../mock/products';
+import { flavorsTranserConnectOrCreate } from 'src/coffees/utils/transerConnectOrCreate';
 const prisma = new PrismaClient();
 
 async function main() {
   for (const coffee of coffees) {
+    const { flavors, ...coffeeData } = coffee;
     await prisma.coffee.create({
-      data: coffee,
+      data: {
+        ...coffeeData,
+        flavors: {
+          connectOrCreate: flavorsTranserConnectOrCreate(flavors),
+        },
+      },
     });
   }
   for (const product of products) {

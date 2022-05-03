@@ -1,20 +1,29 @@
+import { coffees } from './../../mock/coffees';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Coffee as CoffeeModel } from '@prisma/client';
+import { Coffee as CoffeeModel, Flavor as FlavorModel } from '@prisma/client';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { flavorsTranserConnectOrCreate } from 'src/coffees/utils/transerConnectOrCreate';
 @Injectable()
 export class CoffeesService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findAll(): Promise<CoffeeModel[]> {
-    return this.prismaService.coffee.findMany();
+    return this.prismaService.coffee.findMany({
+      include: {
+        flavors: true,
+      },
+    });
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<CoffeeModel> {
     const coffee = await this.prismaService.coffee.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        flavors: true,
       },
     });
     if (!coffee) {
@@ -23,7 +32,7 @@ export class CoffeesService {
     return coffee;
   }
 
-  async findFlavor(id: string) {
+  async findFlavor(id: string): Promise<FlavorModel> {
     return await this.prismaService.flavor.findUnique({
       where: {
         id: id,
@@ -39,18 +48,24 @@ export class CoffeesService {
       data: {
         ...coffeeData,
         flavors: {
-          create: flavors,
+          connectOrCreate: flavorsTranserConnectOrCreate(flavors),
         },
       },
     });
   }
 
   async update(id: string, updateCoffeeDto: UpdateCoffeeDto) {
+    const { flavors, ...coffeeData } = updateCoffeeDto;
     return this.prismaService.coffee.update({
       where: {
         id: id,
       },
-      data: updateCoffeeDto,
+      data: {
+        ...coffeeData,
+        flavors: {
+          connectOrCreate: flavorsTranserConnectOrCreate(flavors),
+        },
+      },
     });
   }
 
