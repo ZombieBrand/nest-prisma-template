@@ -23,10 +23,16 @@ model Product {
 }
 
 model Coffee {
-  id     String   @id @default(cuid())
-  name   String
-  brand  String?
-  flavor String[]
+  id      String   @id @default(cuid())
+  name    String
+  brand   String?
+  flavors Flavor[]
+}
+
+model Flavor {
+  id      String   @id @default(cuid())
+  name    String
+  coffees Coffee[]
 }
 
 // model ExtendedProfile {

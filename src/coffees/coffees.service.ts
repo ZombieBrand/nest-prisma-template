@@ -23,9 +23,25 @@ export class CoffeesService {
     return coffee;
   }
 
+  async findFlavor(id: string) {
+    return await this.prismaService.flavor.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        coffees: true,
+      },
+    });
+  }
   async create(createCoffeeDto: CreateCoffeeDto) {
+    const { flavors, ...coffeeData } = createCoffeeDto;
     return this.prismaService.coffee.create({
-      data: createCoffeeDto,
+      data: {
+        ...coffeeData,
+        flavors: {
+          create: flavors,
+        },
+      },
     });
   }
 

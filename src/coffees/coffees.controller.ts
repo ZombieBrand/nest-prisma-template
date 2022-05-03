@@ -47,4 +47,9 @@ export class CoffeesController {
   async remove(@Param('id') id: string) {
     return this.coffeesService.remove(id);
   }
+
+  @Get('/flavor/:id')
+  async findFlavor(@Param('id') id: string) {
+    return this.coffeesService.findFlavor(id);
+  }
 }
