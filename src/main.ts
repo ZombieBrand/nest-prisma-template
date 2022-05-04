@@ -16,6 +16,9 @@ async function bootstrap() {
       whitelist: true, // whitelist使用,请求参数含有dto没有属性是否过滤删除
       transform: true, // 请求参数是否进行转换,async findOne(@Param('id') id: string) 请求参数id如果是number类型则转换为string
       forbidNonWhitelisted: true, // 配合whitelist使用,请求参数含有dto没有属性返回错误提示信息,false则不会返回错误信息而是过滤无用信息执行
+      transformOptions: {
+        enableImplicitConversion: true, // 全局开启隐式自动转换,默认关闭
+      },
     }),
   );
 

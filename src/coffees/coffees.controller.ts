@@ -14,6 +14,7 @@ import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { CoffeeEntity } from './entities/coffee.entity';
 import { FlavorEntity } from './entities/flavors.entity';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 @Controller('coffees')
 @ApiTags('coffees')
 export class CoffeesController {
@@ -21,10 +22,8 @@ export class CoffeesController {
 
   @Get()
   @ApiOkResponse({ type: [CoffeeEntity] })
-  async findAll(@Query() paginationQuery) {
-    const { limit, offset } = paginationQuery;
-    console.log(limit, offset);
-    const coffees = await this.coffeesService.findAll();
+  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+    const coffees = await this.coffeesService.findAll(paginationQuery);
     return coffees.map((coffee) => new CoffeeEntity(coffee));
   }
 

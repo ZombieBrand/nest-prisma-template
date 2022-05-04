@@ -1,16 +1,20 @@
-import { coffees } from './../../mock/coffees';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Coffee as CoffeeModel, Flavor as FlavorModel } from '@prisma/client';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { flavorsTranserConnectOrCreate } from 'src/coffees/utils/transerConnectOrCreate';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 @Injectable()
 export class CoffeesService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findAll(): Promise<CoffeeModel[]> {
+  async findAll(paginationQuery: PaginationQueryDto): Promise<CoffeeModel[]> {
+    const { limit, offset } = paginationQuery;
+    console.log(paginationQuery);
     return this.prismaService.coffee.findMany({
+      take: limit,
+      skip: offset,
       include: {
         flavors: true,
       },
