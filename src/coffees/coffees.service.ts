@@ -6,13 +6,45 @@ import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { flavorsTranserConnectOrCreate } from 'src/coffees/utils/transerConnectOrCreate';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { COFFEE_BRANDS } from './coffees.constants';
+import { ConfigService, ConfigType } from '@nestjs/config';
+import coffeesConfig from 'src/coffees/config/coffees.config';
 @Injectable()
 export class CoffeesService {
   constructor(
     private readonly prismaService: PrismaService,
+    private readonly configService: ConfigService,
+    @Inject(coffeesConfig.KEY)
+    private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[], // 注入自定义提供器,@Inject(COFFEE_BRANDS)是modeule里面的providers中的一个自定义提供器
   ) {
-    console.log(coffeeBrands); // ['buddy brew', 'nescafe']
+    // 上边@Inject(COFFEE_BRANDS)
+    console.log(
+      '%c [ coffeeBrands ]-16',
+      'font-size:13px; background:pink; color:#bf2c9f;',
+      coffeeBrands,
+    ); // ['buddy brew', 'nescafe']
+
+    // .env key value
+    const databaseHost = this.configService.get<string>(
+      'POSTGRES_DB',
+      '第二参数默认值',
+    );
+    console.log(
+      '%c [ databaseHost ]-23',
+      'font-size:13px; background:pink; color:#bf2c9f;',
+      databaseHost,
+    );
+
+    // src/config/app.config.ts key value,通过app.module.ts注入
+    const appConfig = this.configService.get<any>('database');
+    console.log(
+      '%c [ appConfig ]-33',
+      'font-size:13px; background:pink; color:#bf2c9f;',
+      appConfig,
+    );
+
+    // 局部coffees.config.ts 注入
+    console.log(coffeesConfiguration, 'coffeesConfiguration');
   }
 
   async findAll(paginationQuery: PaginationQueryDto): Promise<CoffeeModel[]> {

@@ -2,7 +2,8 @@ import { Module, Injectable } from '@nestjs/common';
 import { CoffeesController } from './coffees.controller';
 import { CoffeesService } from './coffees.service';
 import { COFFEE_BRANDS } from './coffees.constants';
-
+import { ConfigModule } from '@nestjs/config';
+import coffeesConfig from 'src/coffees/config/coffees.config';
 // 服务配置类
 class ConfigService {}
 class DevelopmentConfigService {}
@@ -18,6 +19,10 @@ export class CoffeeBrandsFactory {
 }
 
 @Module({
+  imports: [
+    ConfigModule, // 注入全局config数据
+    ConfigModule.forFeature(coffeesConfig), // 注入局部coffees.config数据
+  ], // ConfigModule是app.module.ts中的ConfigModule配置全局变量
   controllers: [CoffeesController],
   providers: [
     CoffeesService, // 这里表示提供了CoffeesService
