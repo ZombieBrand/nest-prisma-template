@@ -1,17 +1,22 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Coffee as CoffeeModel, Flavor as FlavorModel } from '@prisma/client';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { flavorsTranserConnectOrCreate } from 'src/coffees/utils/transerConnectOrCreate';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
+import { COFFEE_BRANDS } from './coffees.constants';
 @Injectable()
 export class CoffeesService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    @Inject(COFFEE_BRANDS) coffeeBrands: string[], // 注入自定义提供器,@Inject(COFFEE_BRANDS)是modeule里面的providers中的一个自定义提供器
+  ) {
+    console.log(coffeeBrands); // ['buddy brew', 'nescafe']
+  }
 
   async findAll(paginationQuery: PaginationQueryDto): Promise<CoffeeModel[]> {
     const { limit, offset } = paginationQuery;
-    console.log(paginationQuery);
     return this.prismaService.coffee.findMany({
       take: limit,
       skip: offset,
