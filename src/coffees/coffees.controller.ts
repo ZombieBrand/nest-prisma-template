@@ -15,11 +15,12 @@ import { CoffeeEntity } from './entities/coffee.entity';
 import { FlavorEntity } from './entities/flavors.entity';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { Public } from 'src/common/decorators/public.decorator';
 @Controller('coffees')
 @ApiTags('coffees')
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
-
+  @Public()
   @Get()
   @ApiOkResponse({ type: [CoffeeEntity] })
   async findAll(@Query() paginationQuery: PaginationQueryDto) {
@@ -42,7 +43,7 @@ export class CoffeesController {
   }
 
   @Patch(':id')
-  @ApiCreatedResponse({ type: CoffeeEntity })
+  @ApiOkResponse({ type: CoffeeEntity })
   async update(
     @Param('id') id: string,
     @Body() updateCoffeeDto: UpdateCoffeeDto,

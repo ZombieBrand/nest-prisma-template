@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CoffeesModule } from 'src/coffees/coffees.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { ProductsModule } from './products/products.module';
+import { CommonModule } from './common/common.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -25,6 +26,7 @@ import appConfig from './config/app.config';
     PrismaModule,
     CoffeesModule,
     ProductsModule,
+    CommonModule,
     // TypeOrmModule.forRootAsync({
     //   useFactory: () => ({
     //     type: 'postgres',

@@ -1,8 +1,10 @@
+import { ApiKeyGuard } from './common/guards/api-key.guard';
 import { NestFactory, Reflector, HttpAdapterHost } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
-import { PrismaClientExceptionFilter } from './prisma-client-exception.filter';
+import { PrismaClientExceptionFilter } from 'src/prisma-client-exception.filter';
+import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
 const listenPort = 3000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -27,7 +29,9 @@ async function bootstrap() {
 
   // 将PrismaClientExceptionFilter应用到整个应用程序，需要HttpAdapterHost，因为它扩展了BaseExceptionFilter https://docs.nestjs.com/exception-filters
   const { httpAdapter } = app.get(HttpAdapterHost);
+  // 过滤异常请求重新包装返回
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // 配置Swagger文档
   const config = new DocumentBuilder()
