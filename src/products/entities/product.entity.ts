@@ -51,7 +51,7 @@ export class ProductEntity implements Product {
     // this.id = partial.id;
     // this.createdAt = partial.createdAt;
     // this.updatedAt = partial.updatedAt;
-    // this.name = partial.name;
+    // this.name = partial.name
     // this.description = partial.description;
     // this.price = partial.price;
     // this.sku = partial.sku;

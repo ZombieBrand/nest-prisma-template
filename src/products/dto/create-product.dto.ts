@@ -35,11 +35,6 @@ export class CreateProductDto {
    * @example '200件'
    */
   @IsNotEmpty()
-  @MinLength(5)
+  @MinLength(1)
   sku: string;
-  /**
-   * 产品是否发布
-   * @example true
-   */
-  published?: boolean = false;
 }

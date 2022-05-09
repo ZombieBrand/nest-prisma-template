@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { coffees } from '../mock/coffees';
 import { products } from '../mock/products';
-import { flavorsTranserConnectOrCreate } from 'src/coffees/utils/transerConnectOrCreate';
+import { flavorsTranserConnectOrCreate } from '../src/coffees/utils/transerConnectOrCreate';
 const prisma = new PrismaClient();
 
 async function main() {

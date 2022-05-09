@@ -7,6 +7,8 @@ import { CoffeesModule } from 'src/coffees/coffees.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { ProductsModule } from './products/products.module';
 import { CommonModule } from './common/common.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -21,12 +23,15 @@ import appConfig from './config/app.config';
         POSTGRES_PASSWORD: Joi.required(),
         POSTGRES_DB: Joi.required(),
         POSTGRES_PORT: Joi.number(),
+        SECRET: Joi.required(),
       }),
     }),
     PrismaModule,
     CoffeesModule,
     ProductsModule,
     CommonModule,
+    UserModule,
+    AuthModule,
     // TypeOrmModule.forRootAsync({
     //   useFactory: () => ({
     //     type: 'postgres',

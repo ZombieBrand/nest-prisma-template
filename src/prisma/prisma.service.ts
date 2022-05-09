@@ -9,8 +9,13 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       log: ['query', 'info', 'warn', 'error'],
     });
   }
+
   async onModuleInit() {
     await this.$connect();
+    this.$use(async (params, next) => {
+      console.log('prisma中间件', params);
+      return next(params);
+    });
   }
 
   async enableShutdownHooks(app: INestApplication) {
