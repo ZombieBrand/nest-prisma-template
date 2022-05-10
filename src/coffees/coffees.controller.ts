@@ -22,7 +22,7 @@ import {
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
-import { Protocol } from 'src/common/decorators/protocol.decortator';
+import { Protocol } from 'src/common/decorators/protocol.decorator';
 @Controller('coffees')
 @ApiTags('coffees')
 export class CoffeesController {

@@ -19,7 +19,6 @@ export class HttpExceptionFilter<T extends HttpException>
       typeof exceptionResponse === 'string'
         ? { message: exceptionResponse }
         : (exceptionResponse as object);
-    // console.log(status, exceptionResponse, 'errorMsg');
     response.status(statusCode).json({
       ...error,
       statusCode: status,

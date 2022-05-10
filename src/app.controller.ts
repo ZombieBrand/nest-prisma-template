@@ -18,7 +18,7 @@ export class AppController {
   @ApiOperation({ summary: '登陆账户' })
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  @Public()
+  @Public() // 无需授权的路由
   async login(@Req() req: Request) {
     return this.authService.login(req.user);
   }

@@ -10,15 +10,14 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
-    console.log('validateUser');
     const user = await this.userService.findOne(username);
     const passwordChecking = await bcrypt.compareSync(
       password,
       user.password || '',
     );
     if (passwordChecking) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
-      console.log(password, result);
       return result;
     }
     return null;
