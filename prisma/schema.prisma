@@ -40,7 +40,7 @@ model User {
   username  String   @unique
   nickname  String?
   password  String
-  email     String   @unique
+  email     String?  @unique
   avatar    String?
   role      Role
   createdAt DateTime @default(now())

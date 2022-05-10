@@ -6,7 +6,6 @@ import {
   IsNotEmpty,
   MinLength,
   MaxLength,
-  IsEmail,
   IsEnum,
 } from 'class-validator';
 export class CreateUserDto {
@@ -33,9 +32,9 @@ export class CreateUserDto {
   readonly avatar?: string;
 
   @ApiProperty({ description: '邮箱' })
-  @IsNotEmpty({ message: '邮箱必填' })
-  @IsEmail()
-  readonly email: string;
+  @IsOptional()
+  @IsString()
+  readonly email?: string;
 
   @IsEnum(Role, { message: '角色必须是管理员或者用户' })
   readonly role: Role;
