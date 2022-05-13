@@ -3,7 +3,7 @@ export const users = [
   {
     username: 'superAdmin',
     nickname: 'superAdmin',
-    password: 'admin@123',
+    password: '661ff87537af7a68ad19fa6475b650a0',
     email: '',
     avatar: '',
     role: Role.SuperAdmin,
@@ -11,7 +11,7 @@ export const users = [
   {
     username: 'admin',
     nickname: 'admin',
-    password: 'admin@123',
+    password: '661ff87537af7a68ad19fa6475b650a0',
     email: '',
     avatar: '',
     role: Role.Admin,

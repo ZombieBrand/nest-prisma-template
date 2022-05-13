@@ -53,6 +53,23 @@ enum Role {
   SUPER_ADMIN
 }
 
+model License {
+  id              String   @id @default(cuid())
+  CPUID           String   @unique
+  macAddress      String   @unique
+  company         String
+  model           String
+  telphone        String   @default("")
+  address         String   @default("")
+  reason          String   @default("")
+  applyTime       DateTime
+  deadline        DateTime
+  manageDeviceNum Int      @default(0)
+  functionModel   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 // model User {
 //   id           Int              @id @default(autoincrement())
 //   name         String?

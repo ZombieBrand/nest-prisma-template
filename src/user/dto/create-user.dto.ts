@@ -22,7 +22,7 @@ export class CreateUserDto {
   @ApiProperty({ description: '密码' })
   @IsNotEmpty({ message: '密码必填' })
   @MinLength(6, { message: '密码最少6位' })
-  @MaxLength(16, { message: '密码最多16位' })
+  @MaxLength(100, { message: '密码最多16位' })
   @IsString()
   readonly password: string;
 

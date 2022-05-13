@@ -9,7 +9,10 @@ import { ProductsModule } from './products/products.module';
 import { CommonModule } from './common/common.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { LicensesModule } from './licenses/licenses.module';
 import appConfig from './config/app.config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -26,12 +29,19 @@ import appConfig from './config/app.config';
         SECRET: Joi.required(),
       }),
     }),
+
     PrismaModule,
+    CommonModule,
+    AuthModule,
+    UserModule,
     CoffeesModule,
     ProductsModule,
-    CommonModule,
-    UserModule,
-    AuthModule,
+    LicensesModule,
+    ServeStaticModule.forRoot({
+      //配置静态资源服务开启和地址
+      rootPath: join(process.cwd(), 'public'),
+      exclude: ['/api*'],
+    }),
     // TypeOrmModule.forRootAsync({
     //   useFactory: () => ({
     //     type: 'postgres',

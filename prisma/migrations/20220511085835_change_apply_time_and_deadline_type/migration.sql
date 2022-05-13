@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "License" ALTER COLUMN "applyTime" SET DATA TYPE TEXT,
+ALTER COLUMN "deadline" SET DATA TYPE TEXT;

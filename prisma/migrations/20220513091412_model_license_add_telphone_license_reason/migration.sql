@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "License" ADD COLUMN     "address" TEXT NOT NULL DEFAULT E'',
+ADD COLUMN     "reason" TEXT NOT NULL DEFAULT E'',
+ADD COLUMN     "telphone" TEXT NOT NULL DEFAULT E'';

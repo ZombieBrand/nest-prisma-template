@@ -8,7 +8,9 @@ import { WrapResponseInterceptor } from 'src/common/interceptors/wrap-response.i
 import { TimeoutInterceptor } from 'src/common/interceptors/timeout.interceptor';
 const listenPort = 3000;
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+  });
 
   // 设置全局路由前缀
   app.setGlobalPrefix('api');
@@ -47,7 +49,6 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api_doc', app, document);
-
   // 启动应用
   await app.listen(listenPort);
   console.log(`listen in http://localhost:${listenPort}`);

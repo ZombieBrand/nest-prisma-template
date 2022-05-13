@@ -8,19 +8,26 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-
+    const status = HttpStatus.CONFLICT;
+    const message = exception.meta;
+    console.log(exception);
     switch (exception.code) {
       case 'P2002':
-        const status = HttpStatus.CONFLICT;
-        const message = exception.message.replace(/\n/g, '');
         response.status(status).json({
-          statusCode: status,
-          message: message,
+          code: -1,
+          message: `${message.target}已存在`,
+        });
+        break;
+      case 'P2025':
+        response.status(status).json({
+          code: -1,
+          message: message.cause,
         });
         break;
       // TODO catch other error codes (e.g. 'P2000' or 'P2025')
       default:
         // default 500 error code
+        console.log('PrismaClientExceptionFilter', exception.code);
         super.catch(exception, host);
         break;
     }

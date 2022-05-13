@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -13,6 +14,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductEntity } from './entities/product.entity';
 // 下边依赖使用文档 https://docs.nestjs.com/openapi/operations#responses
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
 @Controller('products')
 @ApiTags('products')
@@ -29,8 +31,8 @@ export class ProductsController {
 
   @Get()
   @ApiOkResponse({ type: [ProductEntity] })
-  async findAll() {
-    const products = await this.productsService.findAll();
+  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+    const products = await this.productsService.findAll(paginationQuery);
     return products.map((product) => new ProductEntity(product));
   }
 
