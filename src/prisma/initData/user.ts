@@ -1,9 +1,9 @@
-import { Role } from '../src/types/role.enum';
+import { Role } from '../../types/role.enum';
 export const users = [
   {
     username: 'superAdmin',
     nickname: 'superAdmin',
-    password: '$2a$10$vYJNMK0W53F..cYD1gqVOucyMB/bwrlbV.7FjJxewAJVFafovI.Sm',
+    password: 'e6e061838856bf47e1de730719fb2609',
     email: 'zombiebrandg@gmail.com',
     avatar: '',
     role: Role.SuperAdmin,
@@ -11,7 +11,7 @@ export const users = [
   {
     username: 'admin',
     nickname: 'admin',
-    password: '$2a$10$vYJNMK0W53F..cYD1gqVOucyMB/bwrlbV.7FjJxewAJVFafovI.Sm',
+    password: 'e6e061838856bf47e1de730719fb2609',
     email: '562168176@qq.com',
     avatar: '',
     role: Role.Admin,

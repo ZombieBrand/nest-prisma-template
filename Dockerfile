@@ -1,6 +1,6 @@
 FROM node:14 AS builder
 
-# Create app directory
+# 创建应用程序目录
 WORKDIR /app
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
