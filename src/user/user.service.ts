@@ -39,7 +39,7 @@ export class UserService {
   }
 
   async findOne(username: string): Promise<UserModule | undefined> {
-    const user = this.prismaService.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: {
         username,
       },

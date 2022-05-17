@@ -24,29 +24,43 @@ export class ProductsController {
   @Post()
   @ApiCreatedResponse({ status: 201, type: ProductEntity })
   async create(@Body() createProductDto: CreateProductDto) {
-    return new ProductEntity(
+    const result = new ProductEntity(
       await this.productsService.create(createProductDto),
     );
+    return {
+      code: 0,
+      data: result,
+    };
   }
 
   @Get()
   @ApiOkResponse({ type: [ProductEntity] })
   async findAll(@Query() paginationQuery: PaginationQueryDto) {
     const products = await this.productsService.findAll(paginationQuery);
-    return products.map((product) => new ProductEntity(product));
+    return {
+      code: 0,
+      data: products.map((product) => new ProductEntity(product)),
+    };
   }
 
   @Get('drafts')
   @ApiCreatedResponse({ type: [ProductEntity] })
   async findDrafts() {
     const drafts = await this.productsService.findDrafts();
-    return drafts.map((product) => new ProductEntity(product));
+    return {
+      code: 0,
+      data: drafts.map((product) => new ProductEntity(product)),
+    };
   }
 
   @Get(':id')
   @ApiOkResponse({ type: ProductEntity })
   async findOne(@Param('id') id: string) {
-    return new ProductEntity(await this.productsService.findOne(id));
+    const product = new ProductEntity(await this.productsService.findOne(id));
+    return {
+      code: 0,
+      data: product,
+    };
   }
 
   @Patch(':id')
@@ -55,14 +69,22 @@ export class ProductsController {
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
   ) {
-    return new ProductEntity(
+    const result = new ProductEntity(
       await this.productsService.update(id, updateProductDto),
     );
+    return {
+      code: 0,
+      data: result,
+    };
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: ProductEntity })
   async remove(@Param('id') id: string) {
-    return new ProductEntity(await this.productsService.remove(id));
+    const result = new ProductEntity(await this.productsService.remove(id));
+    return {
+      code: 0,
+      data: result,
+    };
   }
 }

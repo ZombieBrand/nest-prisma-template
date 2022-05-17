@@ -20,7 +20,11 @@ export class AppController {
   @Post('login')
   @Public() // 无需授权的路由
   async login(@Req() req: Request) {
-    return this.authService.login(req.user);
+    const result = await this.authService.login(req.user);
+    return {
+      data: result,
+      code: 0,
+    };
   }
 
   @ApiOperation({ summary: '获取用户信息' })
@@ -29,6 +33,12 @@ export class AppController {
   })
   @Get('profile')
   async getProfile(@Req() req: Request) {
-    return new UserEntity(await this.authService.getUserProfile(req.user));
+    const result = new UserEntity(
+      await this.authService.getUserProfile(req.user),
+    );
+    return {
+      data: result,
+      code: 0,
+    };
   }
 }

@@ -31,7 +31,6 @@ export class AuthService {
   }
 
   async getUserProfile(user) {
-    const userInfo = await this.userService.getUserProfile(user.id);
-    return userInfo;
+    return this.userService.getUserProfile(user.id);
   }
 }

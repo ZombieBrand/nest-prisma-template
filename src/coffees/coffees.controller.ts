@@ -41,7 +41,10 @@ export class CoffeesController {
     console.log(protocol, '自定义参数装饰器@Protocol');
     // throw new HttpException('咖啡不存在', 1200);
     const coffees = await this.coffeesService.findAll(paginationQuery);
-    return coffees.map((coffee) => new CoffeeEntity(coffee));
+    return {
+      code: 0,
+      data: coffees.map((coffee) => new CoffeeEntity(coffee)),
+    };
   }
 
   @Get(':id')
@@ -49,14 +52,20 @@ export class CoffeesController {
   @ApiOperation({ summary: '获取指定id咖啡' })
   async findOne(@Param('id', ParseIntPipe) id: string) {
     const coffee = await this.coffeesService.findOne(id);
-    return new CoffeeEntity(coffee);
+    return {
+      code: 0,
+      data: new CoffeeEntity(coffee),
+    };
   }
 
   @Post()
   @ApiCreatedResponse({ status: 201, type: CoffeeEntity })
   @ApiOperation({ summary: '新增咖啡' })
   async create(@Body() createCoffeeDto: CreateCoffeeDto) {
-    return new CoffeeEntity(await this.coffeesService.create(createCoffeeDto));
+    return {
+      code: 0,
+      data: new CoffeeEntity(await this.coffeesService.create(createCoffeeDto)),
+    };
   }
 
   @Patch(':id')
@@ -66,22 +75,31 @@ export class CoffeesController {
     @Param('id') id: string,
     @Body() updateCoffeeDto: UpdateCoffeeDto,
   ) {
-    return new CoffeeEntity(
-      await this.coffeesService.update(id, updateCoffeeDto),
-    );
+    return {
+      code: 0,
+      data: new CoffeeEntity(
+        await this.coffeesService.update(id, updateCoffeeDto),
+      ),
+    };
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: CoffeeEntity })
   @ApiOperation({ summary: '删除咖啡' })
   async remove(@Param('id') id: string) {
-    return await this.coffeesService.remove(id);
+    return {
+      code: 0,
+      data: await this.coffeesService.remove(id),
+    };
   }
 
   @Get('/flavor/:id')
   @ApiOkResponse({ type: FlavorEntity })
   @ApiOperation({ summary: '获取咖啡口味信息' })
   async findFlavor(@Param('id') id: string) {
-    return new FlavorEntity(await this.coffeesService.findFlavor(id));
+    return {
+      code: 0,
+      data: new FlavorEntity(await this.coffeesService.findFlavor(id)),
+    };
   }
 }

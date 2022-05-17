@@ -29,19 +29,30 @@ export class UserController {
   @Public() // 无需授权的路由
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    return new UserEntity(await this.userService.create(createUserDto));
+    return {
+      code: 0,
+      data: new UserEntity(await this.userService.create(createUserDto)),
+    };
   }
 
   @Get()
   @UseInterceptors(ClassSerializerInterceptor)
   findAll() {
-    return this.userService.findAll();
+    const result = this.userService.findAll();
+    return {
+      code: 0,
+      data: result,
+    };
   }
 
   @Get(':id')
   @UseInterceptors(ClassSerializerInterceptor)
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+    const result = this.userService.findOne(id);
+    return {
+      code: 0,
+      data: result,
+    };
   }
 
   @Patch(':id')
