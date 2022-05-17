@@ -10,6 +10,8 @@ import { CommonModule } from './common/common.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import appConfig from './config/app.config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -32,6 +34,11 @@ import appConfig from './config/app.config';
     CommonModule,
     UserModule,
     AuthModule,
+    ServeStaticModule.forRoot({
+      //配置静态资源服务开启和地址
+      rootPath: join(process.cwd(), 'public'),
+      exclude: ['/api*'],
+    }),
     // TypeOrmModule.forRootAsync({
     //   useFactory: () => ({
     //     type: 'postgres',

@@ -12,9 +12,9 @@ export class WrapResponseInterceptor implements NestInterceptor {
     console.log('before...,拦截器interceptor');
     return next.handle().pipe(
       map((data) => ({
-        data,
-        code: 0,
-        message: '请求成功',
+        data: data.data,
+        code: data.code || 0,
+        message: data.message || '请求成功',
       })),
     );
   }
