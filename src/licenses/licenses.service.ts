@@ -88,19 +88,19 @@ export class LicensesService {
       })
       .filter((item) => item.length === 2);
     const fileDataObj = Object.fromEntries(fileDataArr);
-    return await this.prismaService.license.create({
-      data: {
-        CPUID: fileDataObj.CPUID,
-        macAddress: fileDataObj.MAC,
-        company: fileDataObj.name,
-        model: fileDataObj.model,
-        telphone: fileDataObj.telphone ?? '',
-        address: fileDataObj.address ?? '',
-        reason: fileDataObj.reason ?? '',
-        applyTime: new Date(Date.now()).toJSON(),
-        deadline: new Date(Date.now()).toJSON(),
-      },
+    const result = await this.create({
+      CPUID: fileDataObj.CPUID,
+      macAddress: fileDataObj.MAC,
+      company: fileDataObj.name,
+      model: fileDataObj.model,
+      telphone: fileDataObj.telphone ?? '',
+      address: fileDataObj.address ?? '',
+      reason: fileDataObj.reason ?? '',
+      applyTime: new Date(fileDataObj.applyTime),
+      deadline: new Date(Date.now()),
+      manageDeviceNum: 0,
     });
+    return result;
   }
   async download(id: string) {
     const license = await this.prismaService.license.findUnique({

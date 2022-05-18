@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
@@ -11,6 +11,9 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findOne(username);
+    if (!user) {
+      throw new HttpException('账户不存在', -1);
+    }
     const passwordChecking = await bcrypt.compareSync(
       password,
       user.password || '',
@@ -19,8 +22,9 @@ export class AuthService {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
+    } else {
+      throw new HttpException('密码错误', -1);
     }
-    return null;
   }
 
   async login(user) {
