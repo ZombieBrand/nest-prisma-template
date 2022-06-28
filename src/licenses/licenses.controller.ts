@@ -17,9 +17,8 @@ import { LicenseEntity } from './entities/license.entity';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
-import { writeFile } from 'fs/promises';
-import * as path from 'path';
-
+import { join } from 'path';
+import { writeFileSync, readFileSync } from 'fs';
 @Controller('licenses')
 export class LicensesController {
   constructor(private readonly licensesService: LicensesService) {}
@@ -76,17 +75,6 @@ export class LicensesController {
   @Get('/download/:id')
   async download(@Param('id') id: string) {
     const data = await this.licensesService.download(id);
-    const filepath = path.join(
-      process.cwd(),
-      'public',
-      'download',
-      '/authorization.txt',
-    );
-    const _data = Buffer.from(data, 'hex');
-    await writeFile(filepath, _data);
-    return {
-      message: '申请授权文件上传成功',
-      data: `authorization.txt`,
-    };
+    return data;
   }
 }

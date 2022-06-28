@@ -11,6 +11,10 @@
           "introspectComments": true
         }
       }
-    ]
+    ],
+    "assets": [
+      "download"
+    ],
+    "watchAssets": true
   }
 }

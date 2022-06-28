@@ -108,6 +108,7 @@ export class LicensesService {
         id,
       },
     });
+    console.log(license, 'license');
     const encryptData = sm4.encrypt(
       `MAC:${license.macAddress}\nCPUID:${license.CPUID}\nname:${
         license.company
