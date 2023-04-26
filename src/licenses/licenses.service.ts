@@ -89,7 +89,7 @@ export class LicensesService {
       .filter((item) => item.length === 2);
     const fileDataObj = Object.fromEntries(fileDataArr);
     const result = await this.create({
-      CPUID: fileDataObj.CPUID,
+      CPUID: `${fileDataObj.CPUID}/${fileDataObj.MAC}`,
       macAddress: fileDataObj.MAC,
       company: fileDataObj.name,
       model: fileDataObj.model,
@@ -109,8 +109,9 @@ export class LicensesService {
       },
     });
     console.log(license, 'license');
+    const CPUID = license.CPUID.split('/');
     const encryptData = sm4.encrypt(
-      `MAC:${license.macAddress}\nCPUID:${license.CPUID}\nname:${
+      `MAC:${license.macAddress}\nCPUID:${CPUID[0]}\nname:${
         license.company
       }\nmodel:${license.model}\napplyTime:${dateFilter(
         license.applyTime,
